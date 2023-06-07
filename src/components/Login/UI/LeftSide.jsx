@@ -3,7 +3,14 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { TfiFacebook } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
-import { getDocumentByField } from "../../Config/Services/Firebase/FireStoreDB";
+import {
+  getDocumentByField,
+  getDocuments,
+  getDocumentsByField,
+} from "../../../Config/Services/Firebase/FireStoreDB";
+import { googleSignIn } from "../../../Config/Services/Auth/GoogleAuth";
+import { notification } from "antd";
+import { useAuth } from "../../../Context/AuthProviders";
 
 export const LeftSide = ({
   setCorrect,
@@ -13,22 +20,35 @@ export const LeftSide = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [Hide, setHide] = useState(false);
-  const [Email, setEmail] = useState("");
+  const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
-  const [DataFetch, setDataFetch] = useState();
-  let EMAIL = "Admin";
-  let PASSWORD = "AdminIsuzusuzukisoctrang";
 
   const navigate = useNavigate();
-  console.log(DataFetch);
+  const { accounts, setAccounts } = useAuth();
+
   useEffect(() => {
-    getDocumentByField("accounts", "admin", "username")
-      .then((data) => setDataFetch(data))
-      .catch((err) => console.error(err));
+    getDocuments("accounts").then((data) => {
+      setAccounts(data);
+    });
   }, []);
 
+  const HandleChangePass = () => {
+    if (accounts[0].username === Username) {
+      setIsChangePasswords(true);
+    } else {
+      notification["error"]({
+        message: "Lỗi !",
+        description: ` 
+        Vui lòng nhập tài khoản QUẢN TRỊ vào ô Tài khoản(*) !`,
+      });
+    }
+  };
+
   const HandleLogin = () => {
-    if (Email === EMAIL && Password === PASSWORD) {
+    if (
+      Username === accounts[0].username &&
+      Password === accounts[0].password
+    ) {
       setIsLoading(false);
       setCorrect(true);
       setTimeout(() => {
@@ -36,8 +56,8 @@ export const LeftSide = ({
       }, 1000);
       setTimeout(() => {
         navigate("/admin");
-      }, 3000);
-    } else if (!Email || !Password) {
+      }, 2000);
+    } else if (!Username || !Password) {
       setErrorMessage(true);
       setTimeout(() => {
         setErrorMessage(false);
@@ -49,6 +69,25 @@ export const LeftSide = ({
         setUncorrect(false);
       }, 2000);
     }
+  };
+
+  const HandleGoogleAuth = () => {
+    googleSignIn().then((data) => {
+      getDocumentsByField("users", "Username", data).then((data) => {
+        if (data[0].admin) {
+          notification["success"]({
+            message: "Đăng nhập thành công !",
+            description: `Chào mừng đến với ${window.location.hostname} !`,
+          });
+        } else {
+          notification["error"]({
+            message: "Đăng nhập không thành công !",
+            description: ` 
+            Vui lòng đăng nhập bằng tài khoản đã được CẤP QUYỀN QUẢN TRỊ !`,
+          });
+        }
+      });
+    });
   };
 
   return (
@@ -69,7 +108,7 @@ export const LeftSide = ({
       <div className="py-3  text-[14px] w-full font-normal border hover:border-colorBlueBold text-center mb-4 rounded-lg">
         <button
           className="hover:scale-125 duration-300 w-full"
-          // onClick={() => GoogleAuth()}npo
+          onClick={() => HandleGoogleAuth()}
         >
           <FcGoogle className="text-blue-600 text-[25px] mr-2 inline-block" />
           Với Google
@@ -78,7 +117,7 @@ export const LeftSide = ({
 
       <div className="border h-0 w-full relative mt-2 mb-4">
         <p className="absolute bg-white px-10 py-1  -top-4 d:left-[20%] p:left-[9%]">
-          Hoặc tiếp tục với email
+          Hoặc tiếp tục với Username
         </p>
       </div>
 
@@ -91,11 +130,11 @@ export const LeftSide = ({
           <input
             type="text"
             className="p-2 w-full font-normal rounded-lg"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
       </div>
-      <div className="w-full   h-[89px] font-semibold text-[13px] ">
+      <div className="w-full  min-h-[85px] font-semibold text-[13px] ">
         <div className="mb-2">
           Mật khẩu
           <p className="text-red-700 inline-block ml-1">*</p>
@@ -103,7 +142,7 @@ export const LeftSide = ({
         <div className="w-full border rounded-lg mb-1 relative">
           <input
             type={Hide ? "text" : "password"}
-            className="p-2 w-full font-normal rounded-lg"
+            className="p-2  w-full font-normal rounded-lg"
             onChange={(e) => setPassword(e.target.value)}
           />
           {Hide ? (
@@ -118,25 +157,27 @@ export const LeftSide = ({
             />
           )}
         </div>
-        {errorMessage && (
-          <p className="text-red-600 font-normal  ml-2">
-            Vui lòng nhập tài khoản và mật khẩu!
-          </p>
-        )}
 
-        <div className="italic font-normal   ">
-          <button
-            onClick={() => setIsChangePasswords(true)}
-            className="p-3 hover:underline"
-          >
-            Thay đổi mật khẩu
-          </button>
-        </div>
+        <p
+          className={`text-red-600 font-normal ml-2 ${
+            errorMessage ? "block " : "hidden"
+          }`}
+        >
+          Vui lòng nhập tài khoản và mật khẩu!
+        </p>
+      </div>
+      <div className=" font-normal w-full">
+        <button
+          onClick={() => HandleChangePass()}
+          className="ml-3 mb-2 hover:underline italic text-[13px]"
+        >
+          Thay đổi mật khẩu
+        </button>
       </div>
 
       <div className=" mb-4 w-full ">
         <button
-          className="py-3 my-6 bg-blue-900 text-white w-full hover:bg-colorBlueBoldHover rounded-lg"
+          className="py-3 mb-6 bg-blue-900 text-white w-full hover:bg-colorBlueBoldHover rounded-lg"
           onClick={() => HandleLogin()}
         >
           Tiếp tục
