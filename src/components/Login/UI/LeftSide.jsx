@@ -4,7 +4,6 @@ import { FcGoogle } from "react-icons/fc";
 import { TfiFacebook } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import {
-  getDocumentByField,
   getDocuments,
   getDocumentsByField,
 } from "../../../Config/Services/Firebase/FireStoreDB";
@@ -22,9 +21,9 @@ export const LeftSide = ({
   const [Hide, setHide] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
-
   const navigate = useNavigate();
-  const { accounts, setAccounts } = useAuth();
+
+  const { accounts, setAccounts, setUsers, setVerify } = useAuth();
 
   useEffect(() => {
     getDocuments("accounts").then((data) => {
@@ -49,7 +48,9 @@ export const LeftSide = ({
       Username === accounts[0].username &&
       Password === accounts[0].password
     ) {
+      setUsers(accounts[0]);
       setIsLoading(false);
+      setVerify(true);
       setCorrect(true);
       setTimeout(() => {
         setIsLoading(true);
@@ -73,12 +74,20 @@ export const LeftSide = ({
 
   const HandleGoogleAuth = () => {
     googleSignIn().then((data) => {
-      getDocumentsByField("users", "Username", data).then((data) => {
+      getDocumentsByField("users", "email", data).then((data) => {
         if (data[0].admin) {
+          setUsers(data[0]);
+          setVerify(true);
           notification["success"]({
             message: "Đăng nhập thành công !",
             description: `Chào mừng đến với ${window.location.hostname} !`,
           });
+          setTimeout(() => {
+            setIsLoading(true);
+          }, 1000);
+          setTimeout(() => {
+            navigate("/admin");
+          }, 2000);
         } else {
           notification["error"]({
             message: "Đăng nhập không thành công !",

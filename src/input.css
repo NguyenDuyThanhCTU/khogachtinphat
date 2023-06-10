@@ -2,3 +2,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.circle-animation {
+
+ 
+    animation: rotate 15s linear infinite;
+  }
+  .circle-animation:hover {
+
+ 
+    animation: rotate 5s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .zoom-animation {
+    animation: zoom 1s linear infinite;
+  }
+  
+  .zoom-animation:hover {
+    animation: zoom 5s linear infinite;
+  }
+  
+  @keyframes zoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+.truncate {
+    white-space: nowrap; /* Ngăn chữ xuống dòng */
+    text-overflow: ellipsis; /* Hiển thị dấu "..." */
+    overflow: hidden; /* Ẩn chữ dư thừa */
+  }
+  
