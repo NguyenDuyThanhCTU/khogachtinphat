@@ -3,6 +3,7 @@ import Footer from "../components/FrontEnd/Footer";
 import Header from "../components/FrontEnd/Header";
 import Sidebar from "../components/FrontEnd/Sidebar";
 import Ads from "../components/FrontEnd/Ads";
+import PopUp from "../components/FrontEnd/PopUp";
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -16,6 +17,9 @@ const DefaultLayout = ({ children }) => {
       <div className="ml-[270px] ">
         <Header />
         <div className="mr-[270px]">{children}</div>
+      </div>
+      <div className="fixed bottom-10 left-10 phone:bottom-24 z-10 phone:right-4">
+        <PopUp />
       </div>
       <div className="z-40 absolute w-full">
         <Footer />

@@ -4,9 +4,20 @@ const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
   const [isUploadProduct, setIsUploadProduct] = useState(0);
-  // isUploadProduct 0: Nothing to do, 1: Open Add products, 2: Delete products
+  const [SortBySize, setSortBySize] = useState(" ");
+  const [SortByType, setSortByType] = useState(" ");
+
   return (
-    <StateContext.Provider value={{ isUploadProduct, setIsUploadProduct }}>
+    <StateContext.Provider
+      value={{
+        isUploadProduct,
+        setIsUploadProduct,
+        SortBySize,
+        setSortBySize,
+        SortByType,
+        setSortByType,
+      }}
+    >
       {children}
     </StateContext.Provider>
   );

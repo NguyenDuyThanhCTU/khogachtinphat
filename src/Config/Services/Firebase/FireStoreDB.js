@@ -81,9 +81,21 @@ export const getDocumentByField = async (collection, field, value) => {
   }
 };
 
-export const getDocumentsByField = async (Collection, field, value) => {
+export const getDocumentsByField = async (Collection, Type, Size) => {
   try {
-    const q = query(collection(db, Collection), where(field, "==", value));
+    let q = query(
+      collection(db, Collection),
+      where("brickType", "==", Type),
+      where("brickSize", "==", Size)
+    );
+    if (Type === " " && Size === " ") {
+      q = query(collection(db, Collection));
+    } else if (Size === " ") {
+      q = query(collection(db, Collection), where("brickType", "==", Type));
+    } else if (Type === " ") {
+      q = query(collection(db, Collection), where("brickSize", "==", Size));
+    }
+
     const querySnapshot = await getDocs(q);
     const data = [];
 

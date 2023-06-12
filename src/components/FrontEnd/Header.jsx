@@ -9,9 +9,17 @@ const Header = () => {
     <div className="h-20 bg-[#326E51] font-LexendDeca">
       <div className="flex justify-between items-center mx-20 h-full">
         <div className="flex flex-row gap-5 text-[30px] text-white cursor-pointer">
-          <AiFillFacebook />
-          <BsPhone />
-          <SiZalo />
+          <a href="https://www.facebook.com/DuyThanhCTU/" target="_blank">
+            <AiFillFacebook className="hover:scale-125 duration-300 hover:text-blue-600 hover:bg-white" />
+          </a>
+
+          <a href="tel:0939699629 ">
+            <BsPhone className="hover:scale-125 duration-300" />
+          </a>
+
+          <a href="http://zalo.me/0939699629" target="_blank">
+            <SiZalo className="hover:scale-125 duration-300 hover:text-blue-600 hover:bg-white w-10" />
+          </a>
         </div>
         <div className="flex flex-row  items-center gap-28 ">
           <div className="relative text-white group  cursor-pointer">
@@ -25,9 +33,13 @@ const Header = () => {
             </p>
           </div>
           <div>
-            <button className="p-3 text-white border px-6 rounded-2xl hover:bg-white hover:text-[#326E51]">
+            <a
+              className="p-3 text-white border px-6 rounded-2xl hover:bg-white hover:text-[#326E51] "
+              href="http://zalo.me/0939699629"
+              target="_blank"
+            >
               Liên hệ
-            </button>
+            </a>
           </div>
         </div>
       </div>

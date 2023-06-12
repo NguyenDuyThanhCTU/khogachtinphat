@@ -9,7 +9,7 @@ const Banner = () => {
     <div>
       <div className="h-[79px] mt-[21px] w-full  bg-[#a0d2ba] relative">
         <div className="h-[79px] bg-[#a0d2ba] w-10 absolute -right-2"></div>
-      </div>{" "}
+      </div>
       <Swiper
         loop={true}
         pagination={{

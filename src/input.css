@@ -24,7 +24,7 @@
   }
 
   .zoom-animation {
-    animation: zoom 1s linear infinite;
+    animation: zoom 15s linear infinite;
   }
   
   .zoom-animation:hover {
@@ -36,7 +36,7 @@
       transform: scale(1);
     }
     to {
-      transform: scale(1.1);
+      transform: scale(1.5);
     }
   }
 
@@ -44,5 +44,63 @@
     white-space: nowrap; /* Ngăn chữ xuống dòng */
     text-overflow: ellipsis; /* Hiển thị dấu "..." */
     overflow: hidden; /* Ẩn chữ dư thừa */
+  }
+
+  .call-animation {
+    padding: 10px;
+    background-color: rgb(221,51,51);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .call-animation::before {
+    content: "";
+    position: absolute;
+    border: 1px solid rgb(221,51,51);
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    border-radius: 50%;
+    animation: pulse 1s linear infinite
+  }
+  
+  .call-animation::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgb(221,51,51);
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    border-radius: 50%;
+    animation: pulse 1s linear infinite;
+    animation-delay: 0.3s
+  }  
+  @keyframes pulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0
+    }
+  
+    50% {
+        transform: scale(1);
+        opacity: 1
+    }
+  
+    100% {
+        transform: scale(1.3);
+        opacity: 0
+    }
+  }
+
+  .neon-div {
+    animation: gradient-animation 10s linear infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   
