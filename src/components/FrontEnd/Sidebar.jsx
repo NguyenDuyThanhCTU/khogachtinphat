@@ -4,10 +4,13 @@ import { BiTrendingUp } from "react-icons/bi";
 import { Input, Radio, Space } from "antd";
 import { BrickSize, BrickType } from "../../Utils/Item";
 import { useStateProvider } from "../../Context/StateProvider";
+import { useData } from "../../Context/DataProviders";
 
 const Sidebar = () => {
   const { setSortByType, setSortBySize, SortBySize, SortByType } =
     useStateProvider();
+  const { Logo, websiteName } = useData();
+
   const onChangeSize = (e) => {
     setSortBySize(e.target.value);
   };
@@ -19,13 +22,9 @@ const Sidebar = () => {
     <div className="h-full w-[270px] border font-LexendDeca">
       <div>
         <div className="flex items-center justify-center">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/img%2Fz4389707119439_b2577afc9718501441ffaf1ae38d1281-removebg-preview.png?alt=media&token=6066e727-39f9-4697-90a8-26eaba866ebc&_gl=1*xcjnck*_ga*MTA1MjQ5NTQ0OS4xNjg0NDAxMjc5*_ga_CW55HF8NVT*MTY4NjIxNjkxOS40Ny4xLjE2ODYyMTcwMTMuMC4wLjA."
-            alt="logo"
-            className="h-[79px] w-20"
-          />
-          <p className="text-[20px] text-center ml-2 font-bold">
-            Gạch cao cấp <br /> Tín Phát
+          <img src={Logo} alt="logo" className="h-[79px] w-20" />
+          <p className="text-[20px] text-center ml-2 font-bold w-[140px]">
+            {websiteName}
           </p>
         </div>
         <div className="h-[79px] mt-[21px] w-full  bg-[#a0d2ba] relative">

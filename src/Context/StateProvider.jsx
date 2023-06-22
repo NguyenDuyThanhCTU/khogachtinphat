@@ -4,12 +4,17 @@ const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
   const [isUploadProduct, setIsUploadProduct] = useState(0);
+  const [isSelected, setSelected] = useState(0);
+
   const [SortBySize, setSortBySize] = useState(" ");
   const [SortByType, setSortByType] = useState(" ");
 
   return (
     <StateContext.Provider
       value={{
+        isSelected,
+        setSelected,
+
         isUploadProduct,
         setIsUploadProduct,
         SortBySize,

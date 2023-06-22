@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import Loading from "../FrontEnd/Loading";
-import Alert from "../FrontEnd/Alert";
+
 import { LeftSide } from "./UI/LeftSide";
 import { RightSide } from "./UI/RightSide";
 import { ChangePassword } from "./UI/ChangePassword";
-
+import Alert from "../Item/Alert";
+import Loading from "../Item/Loading";
 const Login = () => {
   const [Correct, setCorrect] = useState(false);
   const [Uncorrect, setUncorrect] = useState(false);

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product/Product";
-import { Button, Result } from "antd";
+import { Result } from "antd";
 import { Pagination } from "antd";
 import Banner from "./Banner/Banner";
 import { BrickType } from "../../Utils/Item";
-import {
-  getDocuments,
-  getDocumentsByField,
-  getDocumentsByPage,
-  getProducts,
-} from "../../Config/Services/Firebase/FireStoreDB";
+import { getDocumentsByField } from "../../Config/Services/Firebase/FireStoreDB";
 import { useStateProvider } from "../../Context/StateProvider";
 
 const Home = () => {

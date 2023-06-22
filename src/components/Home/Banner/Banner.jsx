@@ -4,7 +4,10 @@ import "swiper/css/pagination";
 
 import { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useData } from "../../../Context/DataProviders";
+
 const Banner = () => {
+  const { Banner } = useData();
   return (
     <div>
       <div className="h-[79px] mt-[21px] w-full  bg-[#a0d2ba] relative">
@@ -22,26 +25,11 @@ const Banner = () => {
         modules={[Pagination, Autoplay]}
         className="mySwiper rounded mt-10"
       >
-        <SwiperSlide>
-          <img
-            src="https://ads-company-storage.s3.ap-southeast-2.amazonaws.com/vieclam24h/banner1.webp"
-            alt="banner"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <img
-            src="https://ads-company-storage.s3.ap-southeast-2.amazonaws.com/vieclam24h/banner2.webp"
-            alt="banner"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <img
-            src="https://ads-company-storage.s3.ap-southeast-2.amazonaws.com/vieclam24h/banner3.webp"
-            alt="banner"
-          />
-        </SwiperSlide>
+        {Banner.map((data, idx) => (
+          <SwiperSlide>
+            <img key={idx} src={data} alt="banner" />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

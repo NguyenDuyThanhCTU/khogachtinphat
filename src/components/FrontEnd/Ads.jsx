@@ -1,8 +1,13 @@
 import React from "react";
 import ProductAds from "../Home/Ads/ProductAds";
 import { BiTrendingUp } from "react-icons/bi";
+import { useData } from "../../Context/DataProviders";
 
 const Ads = () => {
+  const { Advertisement, Products } = useData();
+  const newProducts = Products.slice(-3);
+
+  console.log(newProducts);
   return (
     <div className="h-full w-[270px] border font-LexendDeca">
       <div>
@@ -16,9 +21,17 @@ const Ads = () => {
             className="flex gap-5 flex-col items-center
           border rounded-xl w-[230px] border-[#598a73] p-5 shadow-lg"
           >
+            {newProducts.map((items) => (
+              <ProductAds
+                image={items.image}
+                name={items.name}
+                bricktype={items.brickType}
+                bricksize={items.brickSize}
+              />
+            ))}
+            {/* 
             <ProductAds />
-            <ProductAds />
-            <ProductAds />
+            <ProductAds /> */}
           </div>
         </div>
       </div>
@@ -31,16 +44,14 @@ const Ads = () => {
           className="flex gap-5 flex-col items-center
           border rounded-xl w-[230px] border-[#061b11] p-5 shadow-lg"
         >
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/img%2Fbanner_chuong_trinh_khuyen_mai.jpg?alt=media&token=442ebb08-bccf-45e2-bf13-e78f61636876&_gl=1*vjdz5p*_ga*MTA1MjQ5NTQ0OS4xNjg0NDAxMjc5*_ga_CW55HF8NVT*MTY4NjM2ODU2OS41Ny4xLjE2ODYzNjg2MTEuMC4wLjA."
-            alt="img"
-            className="object-fill w-[200px] h-[500px] shadow-2xl "
-          />
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/img%2Fbanner_chuong_trinh_khuyen_mai.jpg?alt=media&token=442ebb08-bccf-45e2-bf13-e78f61636876&_gl=1*vjdz5p*_ga*MTA1MjQ5NTQ0OS4xNjg0NDAxMjc5*_ga_CW55HF8NVT*MTY4NjM2ODU2OS41Ny4xLjE2ODYzNjg2MTEuMC4wLjA."
-            alt="img"
-            className="object-fill w-[200px] h-[500px] shadow-2xl "
-          />
+          {Advertisement.map((items, idx) => (
+            <img
+              key={idx}
+              src={items}
+              alt="img"
+              className="object-fill w-[200px] h-[500px] shadow-2xl "
+            />
+          ))}
         </div>
       </div>
     </div>

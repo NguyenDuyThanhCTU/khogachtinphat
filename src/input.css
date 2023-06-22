@@ -103,4 +103,15 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+  .element-dropdown {
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem; /* py-2 */
+    padding-right: 0.75rem; /* pr-3 */
+    padding-left: 0.75rem; /* pl-3 */
+  }
+  
+  .element-dropdown:hover {
+    border-radius: 0.25rem; 
+    transform: scale(1.25); 
+  }
   

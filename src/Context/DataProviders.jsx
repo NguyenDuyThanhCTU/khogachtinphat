@@ -1,14 +1,70 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 export const DataContext = createContext();
 
 export const DataProviders = ({ children }) => {
-  const [facebook, setFacebook] = useState();
-  const [zalo, setZalo] = useState();
-  const [phone, setPhone] = useState();
+  // Default
+  const [Facebook, setFacebook] = useState();
+  const [Products, setProducts] = useState([]);
+  const [Gmail, setGmail] = useState("");
+  const [Adress, setAdress] = useState("");
+  const [Location, setLocation] = useState("");
+  const [Logo, setLogo] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [Websitename, setWebsiteName] = useState("");
+  const [Fanpage, setFanpage] = useState("");
+  const [Message, setMessage] = useState("");
+  const [Instagram, setInstagram] = useState("");
+  const [Tiktok, setTiktok] = useState("");
+  const [Twitter, setTwitter] = useState("");
+  const [Youtube, setYoutube] = useState("");
+
+  // Custom
+  const [BrickSize, setBrickSize] = useState([]);
+  const [BrickType, setBrickType] = useState([]);
+  const [Advertisement, setAdvertisement] = useState([]);
+  const [Banner, setBanner] = useState([]);
+
   return (
     <DataContext.Provider
-      value={{ facebook, setFacebook, zalo, setZalo, phone, setPhone }}
+      value={{
+        Fanpage,
+        setFanpage,
+        Message,
+        setMessage,
+        Instagram,
+        setInstagram,
+        Tiktok,
+        setTiktok,
+        Twitter,
+        setTwitter,
+        Youtube,
+        setYoutube,
+        Gmail,
+        setGmail,
+        Adress,
+        setAdress,
+        Websitename,
+        setWebsiteName,
+        Advertisement,
+        setAdvertisement,
+        Products,
+        setProducts,
+        Facebook,
+        setFacebook,
+        Phone,
+        setPhone,
+        BrickSize,
+        setBrickSize,
+        BrickType,
+        setBrickType,
+        Banner,
+        setBanner,
+        Location,
+        setLocation,
+        Logo,
+        setLogo,
+      }}
     >
       {children}
     </DataContext.Provider>
