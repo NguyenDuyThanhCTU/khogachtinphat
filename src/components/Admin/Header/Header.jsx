@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../../Context/AuthProviders";
 import DropDown from "../Item/DropDown";
 import { useStateProvider } from "../../../Context/StateProvider";
+import Clock from "./Clock/Clock";
 
 const Header = () => {
   const { users } = useAuth();
@@ -28,8 +29,8 @@ const Header = () => {
 
         <div className="cursor-pointer flex gap-20 ">
           <div>
-            <p className="hover:scale-110 duration-300">
-              Đồng hồ sẽ ở vị trí này
+            <p className="hover:scale-110 duration-300 ">
+              <Clock />
             </p>
           </div>
         </div>

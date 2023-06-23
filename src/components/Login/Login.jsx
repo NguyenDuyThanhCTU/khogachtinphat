@@ -17,6 +17,7 @@ const Login = () => {
       <div className="">
         <Alert correct={Correct} uncorrect={Uncorrect} />
       </div>
+      {/* Fetch Data for admin page in Alert Component */}
       <Loading loading={isLoading} />
 
       <div className="d:w-[880px] p:w-[90vw] h-[529px] absolute  bg-white bottom-[25%] p:left-[5%] d:left-[30%] flex font-LexendDeca cursor-pointer rounded-sm -z-10">

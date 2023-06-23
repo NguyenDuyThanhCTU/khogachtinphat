@@ -1,11 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { FaCloudUploadAlt } from "react-icons/fa";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
 import { SlideDashboard } from "../../../../../Utils/Temp";
+import { getStorage } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { Empty, notification } from "antd";
+import { updateDocument } from "../../../../../Config/Services/Firebase/FireStoreDB";
+import { useStateProvider } from "../../../../../Context/StateProvider";
 
 const Slide = () => {
+  const [imageUrl, setImageUrl] = useState();
+  const [error, setError] = useState(false);
+  const [Data, setData] = useState();
+  const [selected, setSelected] = useState();
+  const { setIsRefetch } = useStateProvider();
+  const uploadImage = async (e, idx) => {
+    let selectImage = e.target.files[0];
+    const filetypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    if (filetypes.includes(selectImage.type)) {
+      const storage = getStorage();
+      const storageRef = ref(storage, `img/slide-${idx}`);
+
+      uploadBytes(storageRef, selectImage)
+        .then((snapshot) => {
+          console.log("Uploaded a blob or file!");
+
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              setImageUrl(url);
+            })
+            .catch((error) => {
+              console.error("Error getting download URL:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+        });
+    } else {
+      setError(true);
+    }
+  };
+
+  const HandleUpload = (e, idx) => {
+    uploadImage(e);
+    setSelected(idx);
+  };
+
+  const HandleUpdate = (idx) => {
+    const data = `${imageUrl ? imageUrl : Data}`;
+    const newData = {};
+    newData[`slide-${idx}`] = data;
+
+    updateDocument("website", "Trademark", newData).then(() => {
+      notification["success"]({
+        message: "Thành công !",
+        description: `
+        Thông tin đã được CẬP NHẬT !`,
+      });
+      setIsRefetch(3);
+    });
+  };
+  const HandleDelete = (idx) => {};
   return (
     <div className="border rounded-xl">
       <div className="p-4 flex gap-5 ">
@@ -14,14 +71,31 @@ const Slide = () => {
             Cập nhật Slide trình chiếu
           </h3>
           <div className="grid grid-cols-2 gap-5 cursor-pointer overflow-y-scroll h-[300px]">
-            {SlideDashboard.map((items) => (
+            {SlideDashboard.map((items, idx) => (
               <div className="shadow-2xl bg-[#353535] h-[300px]">
-                <div className="">
-                  <img
-                    src={items.image}
-                    alt=""
-                    className="w-[500px] object-cover"
-                  />
+                <div className="w-[490px] h-[100px]">
+                  {(selected === idx && imageUrl) || items.image ? (
+                    <>
+                      <img
+                        src={`${
+                          selected === idx && imageUrl ? imageUrl : items.image
+                        }`}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </>
+                  ) : (
+                    <div className="text-white  bg-w w-full">
+                      <Empty
+                        imageStyle={{ height: 60 }}
+                        description={
+                          <span className="text-white">
+                            Hình ảnh chưa được tải lên
+                          </span>
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className=" ml-3 ">
                   <h3 className="py-3 text-[25px] font-bold ">
@@ -35,6 +109,7 @@ const Slide = () => {
                         type="file"
                         name="upload-video"
                         className="w-0 h-0"
+                        onChange={(e) => HandleUpload(e, idx)}
                       />
                     </label>
                     <p>hoặc</p>
@@ -42,12 +117,37 @@ const Slide = () => {
                       type="text"
                       placeholder="Nhập liên kết hình ảnh"
                       className="py-3 px-4 text-black  border rounded-full outline-none"
+                      onChange={(e) => setData(e.target.value)}
                     />
                   </div>
                 </div>
-                <div className="text-center uppercase py-2 border mx-2 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-blueAdmin border-blueAdmin ">
-                  Cập nhật
-                </div>
+                {!imageUrl && !Data ? (
+                  <div className="text-center uppercase py-2 border mx-2 bg-purple  text-gray-400 border-gray-400 block ">
+                    Cập nhật
+                  </div>
+                ) : (
+                  <div className="group mt-5">
+                    <div className="text-center uppercase py-2 border mx-2 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-blueAdmin border-blueAdmin block group-hover:hidden">
+                      Cập nhật
+                    </div>
+                    <div className=" group-hover:block hidden duration-300">
+                      <div className="flex w-full justify-center gap-2">
+                        <div
+                          className="text-center uppercase py-2  mx-2 px-5 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-white bg-red-600 "
+                          onClick={() => HandleDelete(idx)}
+                        >
+                          Xóa Slide
+                        </div>
+                        <div
+                          className="text-center uppercase py-2 border mx-2 px-5 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-blueAdmin border-blueAdmin "
+                          onClick={() => HandleUpdate(idx + 1)}
+                        >
+                          Cập nhật Slide
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

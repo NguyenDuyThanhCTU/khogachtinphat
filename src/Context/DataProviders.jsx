@@ -4,13 +4,14 @@ export const DataContext = createContext();
 
 export const DataProviders = ({ children }) => {
   // Default
+  const [Gmail, setGmail] = useState("");
+  const [Adress, setAddress] = useState("");
+  const [Location, setLocation] = useState("");
+  const [Phone, setPhone] = useState("");
+
   const [Facebook, setFacebook] = useState();
   const [Products, setProducts] = useState([]);
-  const [Gmail, setGmail] = useState("");
-  const [Adress, setAdress] = useState("");
-  const [Location, setLocation] = useState("");
   const [Logo, setLogo] = useState("");
-  const [Phone, setPhone] = useState("");
   const [Websitename, setWebsiteName] = useState("");
   const [Fanpage, setFanpage] = useState("");
   const [Message, setMessage] = useState("");
@@ -43,7 +44,7 @@ export const DataProviders = ({ children }) => {
         Gmail,
         setGmail,
         Adress,
-        setAdress,
+        setAddress,
         Websitename,
         setWebsiteName,
         Advertisement,

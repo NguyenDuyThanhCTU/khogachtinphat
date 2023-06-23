@@ -3,7 +3,6 @@ import { useAuth } from "../../Context/AuthProviders";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header/Header";
 
-import { useStateProvider } from "../../Context/StateProvider";
 import Sidebar from "./Sidebar/Sidebar";
 import Persona from "./Content/Persona/Persona";
 import { RxCrossCircled } from "react-icons/rx";

@@ -9,12 +9,15 @@ export const StateProvider = ({ children }) => {
   const [SortBySize, setSortBySize] = useState(" ");
   const [SortByType, setSortByType] = useState(" ");
 
+  const [isRefetch, setIsRefetch] = useState(0);
+
   return (
     <StateContext.Provider
       value={{
         isSelected,
         setSelected,
-
+        isRefetch,
+        setIsRefetch,
         isUploadProduct,
         setIsUploadProduct,
         SortBySize,

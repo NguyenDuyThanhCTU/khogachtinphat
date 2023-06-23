@@ -9,7 +9,7 @@ import { useData } from "../../Context/DataProviders";
 const Sidebar = () => {
   const { setSortByType, setSortBySize, SortBySize, SortByType } =
     useStateProvider();
-  const { Logo, websiteName } = useData();
+  const { Logo, Websitename } = useData();
 
   const onChangeSize = (e) => {
     setSortBySize(e.target.value);
@@ -24,7 +24,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-center">
           <img src={Logo} alt="logo" className="h-[79px] w-20" />
           <p className="text-[20px] text-center ml-2 font-bold w-[140px]">
-            {websiteName}
+            {Websitename}
           </p>
         </div>
         <div className="h-[79px] mt-[21px] w-full  bg-[#a0d2ba] relative">
