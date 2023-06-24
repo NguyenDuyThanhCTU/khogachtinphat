@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { BrickSize } from "../../../Utils/item";
-import Input from "../Item/Input";
-import { BrickType } from "../../../Utils/item";
+
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getStorage } from "firebase/storage";
-import { useStateProvider } from "../../../Context/StateProvider";
-import { addDocument } from "../../../Config/Services/Firebase/FireStoreDB";
+
 import { notification } from "antd";
+
+import { useStateProvider } from "../../../../../../../Context/StateProvider";
+import Input from "../../../Item/Input";
+import { useData } from "../../../../../../../Context/DataProviders";
+import { addDocument } from "../../../../../../../Config/Services/Firebase/FireStoreDB";
 
 const AddProduct = () => {
   const [imageUrl, setImageUrl] = useState();
@@ -17,7 +19,7 @@ const AddProduct = () => {
   const [brickType, setBrickType] = useState("GC");
   const [error, setError] = useState(false);
   const { setIsUploadProduct } = useStateProvider();
-
+  const { BrickSize, BrickType } = useData();
   const handleDiscard = () => {
     setImageUrl();
     setName("");
@@ -76,7 +78,11 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="bg-[rgba(0,0,0,0.3)] w-full h-[94vh] z-50 absolute rounded-md ">
+    <div
+      className={`bg-[rgba(0,0,0,0.3)] w-full 
+       h-full
+      z-50 absolute rounded-md duration-300`}
+    >
       <div className="w-[1500px] h-[700px] absolute bg-white bottom-[15%] left-[12%] flex font-LexendDeca cursor-pointer rounded-sm ">
         <div className="justify-center   w-full flex items-center gap-20">
           <div className="">

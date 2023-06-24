@@ -1,12 +1,28 @@
+import { Popconfirm, message } from "antd";
 import React from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteForever } from "react-icons/md";
+import { SlOptionsVertical } from "react-icons/sl";
 
-const Card = ({ title, Icon, image }) => {
+const Card = ({
+  title,
+  Icon,
+  image,
+  style,
+  data,
+  setSelected,
+  idx,
+  setChange,
+  isSelected,
+  HandleUpdate,
+  id,
+}) => {
   return (
-    <div className="py-3 flex flex-col gap-5 bg-[#353535] rounded-md justify-between shadow-xl cursor-pointer">
+    <div className="py-3 flex flex-col gap-5 bg-[#353535] rounded-md justify-between shadow-xl cursor-pointer hover:shadow-slate-600 duration-300">
       <div className="">
-        <div className="flex justify-between items-center mb-4 mx-5">
+        <div className="flex justify-between items-center mb-4  mx-5">
           <h3>{title}</h3>
-          {Icon && <Icon className="text-[25px]" />}
+          {Icon && <Icon className={`text-[25px] p-1 ${style}`} />}
         </div>
         <div>
           <img
@@ -19,18 +35,60 @@ const Card = ({ title, Icon, image }) => {
       <div className="mx-2 ">
         <div className="flex justify-between items-center mb-4">
           <h3 className="italic">{title}</h3>
-          <h3 className="text-blue-400 uppercase font-bold">Cập nhật</h3>
+          {/* <h3 className="text-blue-400 uppercase font-bold">Cập nhật</h3> */}
+
+          <div className="group relative mr-2">
+            <SlOptionsVertical className=" hover:scale-125 duration-300 " />
+            <div className="w-[80px] bg-white opacity-90 absolute -top-2 h-8 right-5 rounded-lg hidden group-hover:block ">
+              <div className="mx-3 flex  justify-between text-[24px] h-full items-center ">
+                <FiEdit className="text-green-600 hover:scale-125 duration-300" />
+                <Popconfirm
+                  title="Xóa sản phẩm"
+                  description="Bạn muốn xóa thông tin này?"
+                  onConfirm={() => {
+                    // HandleDelete();
+                  }}
+                  onCancel={() => {
+                    message.error("Thông tin chưa được xóa!");
+                  }}
+                  okText="Yes"
+                  okType="danger"
+                  cancelText="No"
+                >
+                  <MdDeleteForever className="text-red-600 hover:scale-125 duration-300" />
+                </Popconfirm>
+              </div>
+              <div className="absolute bg-none w-3 h-8 top-0 -right-2"></div>
+            </div>
+          </div>
         </div>
-        <div className="r">
+        <div className="" onClick={() => setSelected(idx)}>
           <input
             type="text "
+            placeholder={data}
             className="outline-none text-black py-2 px-3 rounded-md w-full"
+            onChange={(e) => setChange(e.target.value)}
           />
         </div>
       </div>
-      <div className="text-center uppercase py-2 border mx-2 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-blueAdmin border-blueAdmin ">
-        Kiểm tra trạng thái
-      </div>
+      {isSelected === idx ? (
+        <>
+          {" "}
+          <div
+            className="text-center duration-300 uppercase py-2 border mx-2 bg-purple hover:bg-purpleAdmin hover:text-purpleHover hover:border-purpleHover text-blueAdmin border-blueAdmin "
+            onClick={() => HandleUpdate(id)}
+          >
+            Cập nhật
+          </div>
+        </>
+      ) : (
+        <>
+          {" "}
+          <div className="text-center duration-300 uppercase py-2 border mx-2 bg-purple  ">
+            Cập nhật
+          </div>
+        </>
+      )}
     </div>
   );
 };

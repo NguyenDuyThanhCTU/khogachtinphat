@@ -1,16 +1,24 @@
-export const BrickSize = [
-  { id: 1, name: "15x90" },
-  { id: 2, name: "50x50" },
-  { id: 3, name: "60x60" },
-  { id: 4, name: "80x80" },
-  { id: 5, name: "60x120" },
-];
+import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
+import { BsFacebook, BsMessenger, BsYoutube } from "react-icons/bs";
+import { FaTiktok } from "react-icons/fa";
+import { SiZalo } from "react-icons/si";
+import { HiUserGroup } from "react-icons/hi";
+export const iconMapping = {
+  SiZalo: SiZalo,
+  BsFacebook: BsFacebook,
+  BsMessenger: BsMessenger,
+  AiFillInstagram: AiFillInstagram,
+  FaTiktok: FaTiktok,
+  AiOutlineTwitter: AiOutlineTwitter,
+  BsYoutube: BsYoutube,
+  HiUserGroup: HiUserGroup,
+};
 
-export const BrickType = [
-  { id: 1, name: "GC" },
-  { id: 2, name: "GK" },
-  { id: 3, name: "Matt" },
-  { id: 4, name: "Polished" },
+export const HeaderItemsDropDownTools = [
+  { name: "Trắc nghiệm tính cách", link: "/job", icon: "BsEmojiSmile" },
+  { name: "Tính lương Gross sang Net", link: "/", icon: "BiCalculator" },
+  { name: "Trang trí CV", link: "/", icon: "RxMagicWand" },
+  { name: "Cẩm nang nghề nghiệp", link: "/employer", icon: "BiBookAlt" },
 ];
 
 export const ProductSidebarAdmin = [

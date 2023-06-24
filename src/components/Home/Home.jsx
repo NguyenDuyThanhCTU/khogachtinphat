@@ -3,15 +3,16 @@ import Product from "./Product/Product";
 import { Result } from "antd";
 import { Pagination } from "antd";
 import Banner from "./Banner/Banner";
-import { BrickType } from "../../Utils/Item";
 import { getDocumentsByField } from "../../Config/Services/Firebase/FireStoreDB";
 import { useStateProvider } from "../../Context/StateProvider";
+import { useData } from "../../Context/DataProviders";
 
 const Home = () => {
   const [current, setCurrent] = useState(1);
   const [DataFetch, setDataFetch] = useState([]);
   const [SelectedIdx, setSelectedIdx] = useState(0);
   const { SortByType, SortBySize, setSortByType } = useStateProvider();
+  const { BrickType } = useData();
 
   useEffect(() => {
     getDocumentsByField("products", SortByType, SortBySize).then((data) => {
@@ -36,12 +37,12 @@ const Home = () => {
   return (
     <div className=" font-LexendDeca">
       <Banner />
-      <div className="m-10 ">
-        <div className="p-5 rounded-xl border shadow-xl">
-          <h3 className="font-semibold text-[24px]">
+      <div className="d:m-10 p:m-0">
+        <div className="p-5 rounded-xl border shadow-xl p:w-[400px] d:w-auto">
+          <h3 className="font-semibold d:text-[24px] p:text-[18px]">
             Tất cả sản phẩm {SortByType} {SortBySize}
           </h3>
-          <div className="flex mt-7 gap-5">
+          <div className="d:flex mt-7 gap-5 p:hidden ">
             <button
               onClick={() => HandleSelected(0)}
               className={`p-2 px-4 max-w-[100px]  truncate border-2 rounded-lg  ${
@@ -60,19 +61,18 @@ const Home = () => {
                     ? "  text-white bg-BlueFF border-BlueFF"
                     : "hover:text-white hover:bg-BlueFF hover:border-BlueFF"
                 }`}
-                onClick={() => HandleSelected(index + 1, data.name)}
+                onClick={() => HandleSelected(index + 1, data.typename)}
               >
-                {data.name}
+                {data.typename}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mt-7 rounded-xl border shadow-xl p-5">
+        <div className="mt-7 rounded-xl border shadow-xl p-5 p:w-[400px] d:w-auto">
           {DataFetch.length > 0 ? (
             <>
-              {" "}
-              <div className="grid grid-cols-5 gap-5 grid-rows-5">
+              <div className="grid d:grid-cols-5 gap-5 grid-rows-5 p:grid-cols-1 p:ml-16 d:ml-0">
                 {DataFetch?.map((data) => (
                   <Product
                     image={data.image}
@@ -82,7 +82,7 @@ const Home = () => {
                   />
                 ))}
               </div>
-              <div className="mt-5 flex justify-center">
+              <div className="mt-5 d:flex justify-center p:hidden ">
                 <Pagination current={current} onChange={onChange} total={50} />
               </div>
             </>

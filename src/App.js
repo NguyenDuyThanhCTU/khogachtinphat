@@ -1,10 +1,10 @@
 import "./input.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import DefaultLayout from "./Layout/DefaultLayout";
 import { AllRoutes } from "./routes/index";
 import { AuthProviders } from "./Context/AuthProviders";
 import { StateProvider } from "./Context/StateProvider";
 import { DataProviders } from "./Context/DataProviders";
+import DefaultLayout from "./Layout/DefaultLayout/DefaultLayout";
 const App = () => {
   return (
     <DataProviders>

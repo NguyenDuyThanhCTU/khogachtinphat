@@ -1,18 +1,47 @@
-export const SlideDashboard = [
+const Connect = [
   {
-    image:
-      "https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2FWebsite-Banner-PCa_168250376454_168259030342.jpg&w=1920&q=75",
+    icon: AiFillFacebook,
+    url: Facebook,
+    style: "hover:bg-white hover:text-blue-600",
   },
   {
-    image:
-      "https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2FWeb-banner-PC_168250364372_168259042614.jpg&w=1920&q=75",
+    icon: BsPhone,
+    url: `tel:${Phone}`,
+    style: "",
   },
   {
-    image:
-      "https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2Fbanner-web-VGCC-PC%2520(1)_168250352275_168259050714.jpg&w=1920&q=75",
+    icon: SiZalo,
+    url: `http://zalo.me/${Phone}`,
+    style: "hover:text-blue-400 hover:bg-white w-10",
   },
   {
-    image:
-      "https://vieclam24h.vn/_next/image?url=https%3A%2F%2Fcdn1.vieclam24h.vn%2Fimages%2Fseeker-banner%2F2023%2F04%2F27%2Fbanner-web-VGCC-PC%2520(1)_168250352275_168259050714.jpg&w=1920&q=75",
+    icon: HiUserGroup,
+    url: Fanpage,
+    style: "hover:bg-white hover:text-black p-1",
+  },
+  {
+    icon: BsMessenger,
+    url: Message,
+    style: "hover:bg-white hover:text-blue-600 p-1",
+  },
+  {
+    icon: AiOutlineInstagram,
+    url: Instagram,
+    style: "hover:bg-pink-500 hover:text-white",
+  },
+  {
+    icon: BsTiktok,
+    url: Tiktok,
+    style: "hover:bg-black hover:text-white p-1",
+  },
+  {
+    icon: BsTwitter,
+    url: Twitter,
+    style: "hover:bg-white hover:text-blue-600 p-1",
+  },
+  {
+    icon: AiFillYoutube,
+    url: Youtube,
+    style: "hover:bg-red-600 hover:text-white p-1",
   },
 ];

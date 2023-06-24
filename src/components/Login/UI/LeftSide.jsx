@@ -45,10 +45,8 @@ export const LeftSide = ({
 
   const HandleLogin = () => {
     if (
-      // Username === accounts[0].username &&
-      // Password === accounts[0].password
-      Username === "1" &&
-      Password === "1"
+      Username === accounts[0].username &&
+      Password === accounts[0].password
     ) {
       setUsers(accounts[0]);
       setIsLoading(false);

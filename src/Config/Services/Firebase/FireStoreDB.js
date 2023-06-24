@@ -134,6 +134,43 @@ export const updateDocument = async (collectionName, id, newData) => {
   await updateDoc(doc(db, collectionName, id), newData);
 };
 
+export const updateArrayFieldAtIndex = async (
+  collectionName,
+  id,
+  fieldName,
+  newData,
+  index
+) => {
+  try {
+    const ref = doc(db, collectionName, id); // Đường dẫn đến tài liệu cần cập nhật
+    const snapshot = await getDoc(ref); // Lấy dữ liệu hiện tại của tài liệu
+
+    if (snapshot.exists()) {
+      const currentData = snapshot.data(); // Dữ liệu hiện tại của tài liệu
+
+      if (Array.isArray(currentData[fieldName])) {
+        const updatedArray = [...currentData[fieldName]]; // Tạo một bản sao của mảng hiện tại
+        console.log(updatedArray);
+        if (index >= 0 || index < updatedArray.length) {
+          updatedArray[index] = newData; // Cập nhật giá trị tại vị trí index trong mảng
+
+          await updateDoc(ref, { [fieldName]: updatedArray }); // Cập nhật trường mảng trong tài liệu
+
+          console.log("Cập nhật trường mảng thành công!");
+        } else {
+          console.error("Số thứ tự mảng không hợp lệ!");
+        }
+      } else {
+        console.error("Trường không phải là một mảng!");
+      }
+    } else {
+      console.error("Không tìm thấy tài liệu!");
+    }
+  } catch (error) {
+    console.error("Lỗi khi cập nhật trường mảng:", error);
+  }
+};
+
 export const delDocument = async (CollectionName, id) => {
   try {
     await deleteDoc(doc(db, CollectionName, id));

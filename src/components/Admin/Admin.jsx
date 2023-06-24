@@ -7,15 +7,16 @@ import Sidebar from "./Sidebar/Sidebar";
 import Persona from "./Content/Persona/Persona";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaList } from "react-icons/fa";
+import Fetch from "./Item/Fetch";
+import { useStateProvider } from "../../Context/StateProvider";
+import AddProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/AddProduct";
+import AddType from "./Content/Persona/ProductType/AddType/AddType";
 
 const Admin = () => {
   const { verify } = useAuth();
-
+  const { isUploadProduct } = useStateProvider();
   const [Hidden, setHidden] = useState(false);
   const navigate = useNavigate();
-  const logo1 = "https://image-sn.s3.amazonaws.com/Russo+Tech.png";
-  const logo2 = "https://image-sn.s3.amazonaws.com/NDTh.png";
-
   useEffect(() => {
     if (!verify) {
       navigate("/login");
@@ -23,7 +24,20 @@ const Admin = () => {
   }, []);
 
   return (
-    <div className="grid grid-flow-col font-LexendDeca">
+    <div className="grid grid-flow-col font-LexendDeca relative">
+      <div
+        className={`duration-300 absolute left-0 right-0  ${
+          isUploadProduct === 0 ? "h-0" : "h-[100vh]"
+        }`}
+      >
+        {isUploadProduct === 1 ? (
+          <AddProduct />
+        ) : isUploadProduct === 2 ? (
+          <AddType />
+        ) : null}
+      </div>
+
+      <Fetch />
       <div
         className={`${
           Hidden ? "w-[1px] " : "w-[350px] "

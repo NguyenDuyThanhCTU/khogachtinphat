@@ -7,7 +7,9 @@ import { useStateProvider } from "../../../../../../Context/StateProvider";
 const Contact = () => {
   const { setIsRefetch } = useStateProvider();
   const [Data, setData] = useState("");
-  const { Phone, Gmail, Location, Adress } = useData();
+  const { Phone, Gmail, Location, Address } = useData();
+  const [isSelected, setSelected] = useState(false);
+
   const ContactDashboard = [
     {
       name: "Số điện thoại",
@@ -22,7 +24,7 @@ const Contact = () => {
     {
       name: "Địa chỉ",
       type: "textarea",
-      placeholder: Adress,
+      placeholder: Address,
     },
     {
       name: "Vị trí",
@@ -45,18 +47,18 @@ const Contact = () => {
       } else if (idx === 1) {
         newData = { gmail: Data };
       } else if (idx === 2) {
-        newData = { location: Data };
-      } else if (idx === 3) {
         newData = { address: Data };
+      } else if (idx === 3) {
+        newData = { location: Data };
       }
-      console.log(newData);
+
       updateDocument("website", "Contact", newData).then(() => {
         notification["success"]({
           message: "Thành công !",
           description: `
           Thông tin đã được CẬP NHẬT !`,
         });
-        setIsRefetch(2);
+        setIsRefetch("contact");
       });
     }
   };
@@ -73,20 +75,29 @@ const Contact = () => {
                 <label>{items.name}</label>
                 <div className="flex gap-5">
                   {Type && (
-                    <Type
-                      placeholder={items.placeholder}
-                      type="text"
-                      className="px-4 py-2 text-black outline-none rounded-2xl bg-gray-300 w-[240px] "
-                      onChange={(e) => setData(e.target.value)}
-                    />
+                    <div onClick={() => setSelected(idx)}>
+                      {" "}
+                      <Type
+                        placeholder={items.placeholder}
+                        type="text"
+                        className="px-4 py-2 text-black outline-none rounded-2xl bg-gray-300 w-[240px] "
+                        onChange={(e) => setData(e.target.value)}
+                      />
+                    </div>
                   )}
                   <div>
-                    <button
-                      className="hover:bg-[#bb86fc37] hover:text-[#BB86FC] text-[#74affc] bg-[#74affc43] px-3 py-2 rounded-xl"
-                      onClick={() => HandleUpdate(idx)}
-                    >
-                      Cập nhật
-                    </button>
+                    {isSelected === idx ? (
+                      <button
+                        className="hover:bg-[#bb86fc37] hover:text-[#BB86FC] text-[#74affc] bg-[#74affc43] px-3 py-2 rounded-xl"
+                        onClick={() => HandleUpdate(idx)}
+                      >
+                        Cập nhật
+                      </button>
+                    ) : (
+                      <button className="text-white bg-gray-400 px-3 py-2 rounded-xl cursor-default">
+                        Cập nhật
+                      </button>
+                    )}
                   </div>
                 </div>
               </>

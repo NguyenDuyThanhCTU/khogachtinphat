@@ -9,7 +9,7 @@ export const StateProvider = ({ children }) => {
   const [SortBySize, setSortBySize] = useState(" ");
   const [SortByType, setSortByType] = useState(" ");
 
-  const [isRefetch, setIsRefetch] = useState(0);
+  const [isRefetch, setIsRefetch] = useState();
 
   return (
     <StateContext.Provider

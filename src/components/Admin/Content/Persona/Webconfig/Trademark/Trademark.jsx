@@ -76,7 +76,7 @@ const Trademark = () => {
           description: `
           Thông tin đã được CẬP NHẬT !`,
         });
-        setIsRefetch(2);
+        setIsRefetch("trademark");
       });
     }
   };
