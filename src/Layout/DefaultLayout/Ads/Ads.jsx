@@ -3,6 +3,11 @@ import React from "react";
 import { BiTrendingUp } from "react-icons/bi";
 import { useData } from "../../../Context/DataProviders";
 import ProductAds from "./ProductAds";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { Pagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Ads = () => {
   const { Advertisement, Products } = useData();
@@ -21,14 +26,29 @@ const Ads = () => {
             className="flex gap-5 flex-col items-center
           border rounded-xl w-[230px] border-[#598a73] p-5 shadow-lg"
           >
-            {newProducts.map((items) => (
-              <ProductAds
-                image={items.image}
-                name={items.name}
-                bricktype={items.brickType}
-                bricksize={items.brickSize}
-              />
-            ))}
+            <Swiper
+              loop={true}
+              pagination={{
+                dynamicBullets: true,
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[Pagination, Autoplay]}
+              className="mySwiper rounded mt-10 "
+            >
+              {newProducts.map((items) => (
+                <SwiperSlide>
+                  <ProductAds
+                    image={items.image}
+                    name={items.name}
+                    bricktype={items.brickType}
+                    bricksize={items.brickSize}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </div>

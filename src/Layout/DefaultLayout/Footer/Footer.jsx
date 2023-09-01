@@ -6,7 +6,7 @@ import { useData } from "../../../Context/DataProviders";
 const Footer = () => {
   const { Phone, Location, Address } = useData();
   return (
-    <div className="bg-[#326E51] font-LexendDeca  p-2 cursor-pointer text-white ">
+    <div className="bg-gray-600 font-LexendDeca  p-2 cursor-pointer text-yellow-400 ">
       <div className="d:flex p:hidden   justify-between mx-[270px] =">
         <div className="my-10 flex-1">
           <img
@@ -15,7 +15,7 @@ const Footer = () => {
             className="object-cover w-52 h-52 bg-white "
           />
         </div>
-        <div className="flex-1 text-[18px] text-white">
+        <div className="flex-1 text-[18px] text-yellow-400">
           <h3 className="text-[32px] my-10 text-center font-bold">
             Kho gạch cao cấp Tín Phát
           </h3>
@@ -77,13 +77,10 @@ const Footer = () => {
       <div className="border-t  text-white">
         <div className="flex justify-between d:mx-80 p:mx-0 h-[41px] items-center ">
           <div className=" inline-block text-sm">
-            <div>Copyright © 2023ADS </div>
+            <div>2020 Copyright© </div>
           </div>
           <div className="inline-block text-sm">
-            <p className="inline-block">Thiết kế bởi </p>
-            <a className="inline-block ml-1" href="/">
-              Thanh Dev
-            </a>
+            <p className="inline-block"> Web Design by Th Dev Company </p>
           </div>
         </div>
       </div>

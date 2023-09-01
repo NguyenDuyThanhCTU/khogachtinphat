@@ -5,17 +5,19 @@ import { useData } from "../../../Context/DataProviders";
 const ProductAds = ({ image, name, bricktype, bricksize }) => {
   const { Phone } = useData();
   return (
-    <div>
+    <div className="py-5 bg-gray-500">
       <div
-        className="w-[190px] h-[190px] bg-gray-200 rounded-xl  shadow-2xl  border border-red-500 relative hover:scale-105 duration-200"
+        className="h-auto p:w-auto d:w-[190px] d:mx-0 p:mx-2  shadow-2xl    relative "
         onClick={() => console.log("a")}
       >
-        <img
-          src={image}
-          alt="img"
-          className="w-full h-[124px]  object-cover rounded-t-xl"
-        />
-        <div className="flex  flex-col w-full p-2 px-3">
+        <div className="h-[200px] p:w-auto d:w-[188px] overflow-hidden">
+          <img
+            src={image}
+            alt="img"
+            className="w-full h-full object-cover rounded-t-xl hover:scale-110 duration-300"
+          />
+        </div>
+        <div className="flex  flex-col w-full p-2 px-3 bg-black ">
           <div className="text-[16px] flex flex-col">
             <p className="truncate">
               <SiDatabricks className="inline-block text-[18px] mr-2 " />

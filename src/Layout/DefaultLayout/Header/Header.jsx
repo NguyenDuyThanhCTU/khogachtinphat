@@ -1,172 +1,228 @@
-import React, { useState } from "react";
-import { AiOutlineStar } from "react-icons/ai";
-import { BsList, BsPhone } from "react-icons/bs";
-import { SiDatabricks, SiZalo } from "react-icons/si";
-import { FiSearch } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import { MdOutlineFormatListBulleted } from "react-icons/md";
+import { RxCross1 } from "react-icons/rx";
 import { useData } from "../../../Context/DataProviders";
-import { Input, Radio, Space } from "antd";
-import PhoneDropDown from "./DropDown/PhoneDropDown";
-import { BiUser } from "react-icons/bi";
-import { GiClayBrick } from "react-icons/gi";
+
+import { AiFillCaretRight } from "react-icons/ai";
+
+import { BsCart3 } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
+
+import DropDown from "./Item/DropDown";
+import { HeaderItems } from "../../../Utils/Item";
 import { useStateProvider } from "../../../Context/StateProvider";
 
 const Header = () => {
-  const { setSortByType, SortByType, setSortBySize, SortBySize } =
-    useStateProvider();
-  const { Phone, BrickSize, BrickType, Logo } = useData();
-  const [isOpen, setIsOpen] = useState(0);
-  console.log(BrickType);
-  const Connect = [
-    {
-      icon: BsPhone,
-      url: `tel:${Phone}`,
-      style: "",
-    },
-    {
-      icon: SiZalo,
-      url: `http://zalo.me/${Phone}`,
-      style: "hover:text-blue-400 hover:bg-white w-10",
-    },
-  ];
+  const [isSelected, setIsSelected] = useState(0);
+  const [Hidden, setHidden] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [elementTop, setElementTop] = useState(95);
+  const [IsTranslate, setTranslate] = useState(false);
+  const [Search, setSearch] = useState("");
 
-  const onChangeType = (e) => {
-    setSortByType(e.target.value);
+  const targetPosition = 1;
+  const { Logo, Websitename, BrickType } = useData();
+  const { setSortByType } = useStateProvider();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.pageYOffset || document.documentElement.scrollTop;
+      setScrollPosition(position);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (scrollPosition > targetPosition) {
+      setElementTop(0);
+      setTranslate(true);
+    } else {
+      setElementTop(95);
+      setTranslate(false);
+    }
+  }, [scrollPosition]);
+
+  const HandleOpenSubMenu = (type) => {
+    setSortByType(type);
+    navigate("/");
   };
 
-  const onChangeSize = (e) => {
-    setSortBySize(e.target.value);
-  };
   return (
-    <div className="d:h-20 p:h-16 bg-[#326E51] font-LexendDeca">
-      <div className="d:flex justify-between items-center mx-20 h-full p:hidden">
-        <div className="flex flex-row gap-5 text-[30px] text-white cursor-pointer">
-          {Connect.map((items) => {
-            let Icon = items.icon;
+    <div className="d:h-[126px] font-LexendDeca  p:h-auto">
+      <div className="bg-white ">
+        <div className=" bg-none h-full relative  bg-white ">
+          <div className=" w-full    text-[#1b365d] h-[92px] z-50 p:hidden d:flex justify-center">
+            <div className="flex justify-between first-letter: items-center w-[1100px] ">
+              <div className="flex items-center gap-10">
+                <Link to="/">
+                  <img src={Logo} alt="img" className="w-[90px]" />
+                </Link>
+                <div className=" text-[#2d94c4]">
+                  <div className="flex items-center flex-col">
+                    <h3 className="uppercase text-[24px] font-bold">
+                      {Websitename}
+                    </h3>
+                    <span className="text-redPrimmary">
+                      Uy tín - Chất lượng - Giá rẻ
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-            return (
-              <>
-                {items.url && (
-                  <a href={items.url} target="_blank" rel="noreferrer">
-                    <Icon
-                      className={`hover:scale-125 duration-300 ${items.style}  `}
+              <div className="flex gap-20 items-center">
+                <div className="relative text-black group  cursor-pointer">
+                  <input
+                    type="text"
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="p-2 px-4 outline-none rounded-full bg-white border-mainpink border w-[300px]"
+                  />
+                  <Link to={`/cua-hang/tim-kiem/${Search}`}>
+                    <FiSearch
+                      className={`${
+                        Search && "-right-10 bg-[#F67D08] text-white"
+                      } group-hover:bg-[#F67D08] group-hover:text-white inline-block bg-white w-[36px] h-[36px] p-2 font-bold rounded-full text-[#F67D08] absolute right-[4px] bottom-[3px] group-hover:-right-10  duration-300 hover:scale-110`}
                     />
-                  </a>
+                  </Link>
+                  <div
+                    className={`${
+                      Search ? "-top-3 left-5  " : "top-2 left-4"
+                    } bg-white absolute   group-hover:-top-3 group-hover:left-5 px-2 duration-300`}
+                  >
+                    Tìm kiếm
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="p:block d:hidden w-full  ">
+            <div className="flex justify-between  items-center ">
+              <Link to="/">
+                <img src={Logo} alt="logo" className="h-[50px] m-5 " />
+              </Link>
+              <div className="flex items-center text-[60px]">
+                {Hidden ? (
+                  <RxCross1
+                    className="bg-redPrimmary text-white p-2 "
+                    onClick={() => setHidden(!Hidden)}
+                  />
+                ) : (
+                  <MdOutlineFormatListBulleted
+                    className="bg-redPrimmary text-white p-2 "
+                    onClick={() => setHidden(!Hidden)}
+                  />
                 )}
-              </>
-            );
-          })}
-        </div>
-        <div className="flex flex-row  items-center gap-28 ">
-          <div className="relative text-white group  cursor-pointer">
-            <input
-              type="text"
-              className="p-2 px-4 outline-none rounded-full bg-[#326E51] border-white border w-[300px]"
-            />
-            <FiSearch className="inline-block bg-white w-[36px] h-[36px] p-2 font-bold rounded-full text-[#F67D08] absolute right-[4px] bottom-[3px] group-hover:-right-10 duration-300" />
-            <p className="bg-[#326E51] absolute top-2 left-4 group-hover:-top-3 group-hover:left-5 px-2 duration-300">
-              Tìm kiếm
-            </p>
-          </div>
-          <div>
-            <a
-              className="p-3 text-white border px-6 rounded-2xl hover:bg-white hover:text-[#326E51] "
-              href={`http://zalo.me/${Phone}`}
-              target="_blank"
-              rel="noreferrer"
+              </div>
+            </div>
+            <div
+              className={`${
+                Hidden ? "h-screen" : "h-0 "
+              } w-full duration-700 bg-[rgba(253,253,253,0.9)] overflow-y-scroll`}
             >
-              Liên hệ
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* <-- Phone --> */}
-      <div className="p:flex d:hidden relative z-20">
-        <div className="flex justify-between items-center mx-2 w-full">
-          <div className="" onClick={() => setIsOpen(2)}>
-            <GiClayBrick className="text-[50px] text-white" />
-          </div>
-          <div>
-            <img src={Logo} alt="logo" className="w-16 " />
-          </div>
-
-          <div onClick={() => setIsOpen(1)}>
-            <SiDatabricks className="text-[40px] text-white" />
-          </div>
-        </div>
-
-        <div
-          className={`h-screen ${
-            isOpen === 1 ? "w-full" : " w-0 "
-          } absolute flex right-0  duration-300 overflow-hidden`}
-        >
-          <div
-            className="flex-[30%] h-full  bg-[rgba(0,0,0,0.4)]"
-            onClick={() => setIsOpen(0)}
-          ></div>
-          <div
-            className={`${
-              isOpen === 1
-                ? "flex-[70%] h-full bg-white overflow-y-scroll"
-                : "hidden"
-            } z-50`}
-          >
-            <div className="mx-5 mt-10">
-              <div className="flex items-center text-black text-[15px] gap-2 pb-5">
-                <AiOutlineStar className="text-colortopdownBlue" />
-                <p>Danh sách loại gạch</p>
-              </div>
-              <div className="flex items-start pr-5 flex-col gap-5  py-4 border-b border-t">
-                <Radio.Group onChange={onChangeType} value={SortByType}>
-                  <Space
-                    direction="vertical"
-                    className="font-normal text-[18px] "
-                  >
-                    <Radio value={" "}>Tất cả</Radio>
-                    {BrickType.map((data) => (
-                      <Radio value={data.typename}>{data.typename}</Radio>
-                    ))}
-                  </Space>
-                </Radio.Group>
-              </div>
+              {HeaderItems.map((items, idx) => {
+                return (
+                  <DropDown
+                    idx={idx}
+                    dropdown={BrickType}
+                    content={items.name}
+                    link={items.link}
+                    setHidden={setHidden}
+                  />
+                );
+              })}
             </div>
           </div>
-        </div>
 
-        <div
-          className={`h-screen ${
-            isOpen === 2 ? "w-full" : " w-0"
-          } absolute flex duration-300 overflow-hidden`}
-        >
-          <div
-            className={`${
-              isOpen === 2 ? "flex-[70%] h-full bg-white" : "hidden"
-            }`}
-          >
-            <div className="mx-5 mt-10">
-              <div className="flex items-center text-black text-[15px] gap-2 pb-5">
-                <AiOutlineStar className="text-colortopdownBlue" />
-                <p>Danh sách kích cỡ gạch</p>
-              </div>
-              <div className="flex  flex-col gap-5  py-4 border-b border-t">
-                <Radio.Group onChange={onChangeSize} value={SortBySize}>
-                  <Space
-                    direction="vertical"
-                    className="font-normal text-[18px]"
-                  >
-                    <Radio value={" "}>Tất cả</Radio>
-                    {BrickSize.map((data) => (
-                      <Radio value={data.typename}>{data.typename}</Radio>
-                    ))}
-                  </Space>
-                </Radio.Group>
-              </div>
+          <div className="d:flex flex-col p:hidden w-full  items-center">
+            <div
+              className={`fixed z-10 ${
+                IsTranslate
+                  ? `w-full bg-white text-yellow-600 `
+                  : " w-[1600px] bg-gray-600 text-white  "
+              }   duration-300 h-[69px] rounded-lg flex justify-center px-5  items-center text-normal font-semibold gap-16`}
+              style={{ top: `${elementTop}px` }}
+            >
+              {HeaderItems.map((items, idx) => {
+                const sort = BrickType.filter(
+                  (item) => item.parentParams === items.link
+                );
+
+                return (
+                  <div className="relative" key={idx}>
+                    <Link
+                      to={`${
+                        items.params ? `/${items.params}` : `/${items.link}`
+                      }`}
+                    >
+                      <div className="group/main">
+                        <div
+                          className={`uppercase text-[18px] flex items-center justify-between  gap-2  hover:text-mainpink duration-500  ${
+                            IsTranslate
+                              ? ` ${
+                                  isSelected === idx
+                                    ? "text-mainpink"
+                                    : "text-black"
+                                }`
+                              : `text-white`
+                          }
+  
+                         `}
+                          onClick={() => {
+                            setIsSelected(idx);
+                          }}
+                        >
+                          <p> {items.name}</p>
+                          {items.link === "san-pham" && (
+                            <AiFillCaretRight className="group-hover/main:rotate-90 duration-500" />
+                          )}
+                        </div>
+                        {/*  */}
+                        {items.link === "san-pham" && (
+                          <div className="group-hover/main:block hidden relative z-20">
+                            <div className="absolute h-10 w-full bg-none"></div>
+                            <div className="  absolute  mt-5 w-[250px] max-h-[300px]  shadow-xl rounded-b-lg bg-white  overflow-y-auto overflow-x-visible">
+                              {BrickType.map((items, idx) => (
+                                <div className="">
+                                  <div className="w-full">
+                                    <div
+                                      className="py-4 px-8 font-light bg-black text-yellow-400 group duration-300 hover:text-white hover:bg-mainpink flex justify-between items-center w-full"
+                                      onClick={() =>
+                                        HandleOpenSubMenu(items.typename)
+                                      }
+                                    >
+                                      <span>{items.typename}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {/*  */}
+                      </div>
+                    </Link>
+                    <div
+                      className={` ${
+                        isSelected === idx
+                          ? IsTranslate
+                            ? "w-full bg-mainpink"
+                            : "w-full bg-white"
+                          : "w-0"
+                      }  duration-500 h-2 rounded-3xl absolute -bottom-[23px]`}
+                    ></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div
-            className="flex-[30%] h-full bg-[rgba(0,0,0,0.4)]"
-            onClick={() => setIsOpen(0)}
-          ></div>
         </div>
       </div>
     </div>

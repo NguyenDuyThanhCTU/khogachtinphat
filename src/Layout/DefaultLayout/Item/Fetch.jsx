@@ -56,7 +56,7 @@ const Fetch = () => {
       setBrickType(data.reverse());
     });
 
-    getDocuments("products").then((data) => {
+    getProducts("products").then((data) => {
       setProducts(data);
     });
   }, [isRefetch]);

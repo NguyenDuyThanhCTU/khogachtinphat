@@ -15,7 +15,7 @@ import { addDocument } from "../../../../../../../Config/Services/Firebase/FireS
 const AddProduct = () => {
   const [imageUrl, setImageUrl] = useState();
   const [name, setName] = useState("");
-  const [brickSize, setBrickSize] = useState("15x90");
+  const [brickSize, setBrickSize] = useState("60x120");
   const [brickType, setBrickType] = useState("GC");
   const [error, setError] = useState(false);
   const { setIsUploadProduct } = useStateProvider();
@@ -161,9 +161,9 @@ const AddProduct = () => {
                     <option
                       key={item.id}
                       className=" outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
-                      value={item.name}
+                      value={item.typename}
                     >
-                      {item.name}
+                      {item.typename}
                     </option>
                   ))}
                 </select>
@@ -179,9 +179,9 @@ const AddProduct = () => {
                     <option
                       key={item.id}
                       className=" outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
-                      value={item.name}
+                      value={item.typename}
                     >
-                      {item.name}
+                      {item.typename}
                     </option>
                   ))}
                 </select>

@@ -99,3 +99,22 @@ export const SocialMediaDashboard = [
       "https://img.nhandan.com.vn/Files/Images/2021/04/13/3A708284_F5B8_407D_ADC0_339DBEE-1618275907021.jpeg",
   },
 ];
+
+export const HeaderItems = [
+  {
+    name: "Trang chủ",
+    link: "",
+  },
+  {
+    name: "Giới thiệu",
+    link: "gioi-thieu",
+  },
+  {
+    name: "Sản phẩm",
+    link: "san-pham",
+  },
+  {
+    name: "Liên hệ",
+    link: "lien-he",
+  },
+];
