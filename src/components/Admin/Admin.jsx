@@ -11,6 +11,7 @@ import Fetch from "./Item/Fetch";
 import { useStateProvider } from "../../Context/StateProvider";
 import AddProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/AddProduct";
 import AddType from "./Content/Persona/ProductType/AddType/AddType";
+import EditProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/EditProduct";
 
 const Admin = () => {
   const { verify } = useAuth();
@@ -34,10 +35,11 @@ const Admin = () => {
           <AddProduct />
         ) : isUploadProduct === 2 ? (
           <AddType />
+        ) : isUploadProduct === 3 ? (
+          <EditProduct />
         ) : null}
       </div>
 
-      <Fetch />
       <div
         className={`${
           Hidden ? "w-[1px] " : "w-[350px] "

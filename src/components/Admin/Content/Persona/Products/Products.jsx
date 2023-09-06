@@ -10,12 +10,13 @@ import {
   delDocument,
   getProducts,
 } from "../../../../../Config/Services/Firebase/FireStoreDB";
+import { useData } from "../../../../../Context/DataProviders";
 
 const LeftSide = () => {
   const [DataFetch, setDataFetch] = useState([]);
   const [isClick, setIsClick] = useState(false);
   const { isUploadProduct, setIsUploadProduct } = useStateProvider();
-
+  const { setUpdateId } = useData();
   useEffect(() => {
     getProducts("products").then((data) => {
       setDataFetch(data.reverse());
@@ -27,6 +28,10 @@ const LeftSide = () => {
       message.success("Xóa sản phẩm thành công!");
       setIsUploadProduct(2);
     });
+  };
+  const HandleEdit = (id) => {
+    setUpdateId(id);
+    setIsUploadProduct(3);
   };
 
   return (
@@ -43,7 +48,12 @@ const LeftSide = () => {
                   <FiEdit className="text-red-600 hover:scale-125 duration-300 " />
                   <div className="w-[120px] bg-white opacity-90 absolute -top-2 h-8 left-5 rounded-lg hidden group-hover:block ">
                     <div className="mx-3 flex  justify-between text-[24px] h-full items-center ">
-                      <FcViewDetails className="hover:scale-125 duration-300" />
+                      <FcViewDetails
+                        className="hover:scale-125 duration-300"
+                        onClick={() => {
+                          HandleEdit(data.id);
+                        }}
+                      />
                       <FiEdit className="text-green-600 hover:scale-125 duration-300" />
                       <Popconfirm
                         title="Xóa sản phẩm"

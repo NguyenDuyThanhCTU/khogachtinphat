@@ -28,10 +28,12 @@ export const DataProviders = ({ children }) => {
   const [BrickSize, setBrickSize] = useState([]);
   const [BrickType, setBrickType] = useState([]);
   const [Advertisement, setAdvertisement] = useState([]);
-
+  const [updateId, setUpdateId] = useState();
   return (
     <DataContext.Provider
       value={{
+        updateId,
+        setUpdateId,
         Facebook,
         setFacebook,
         Fanpages,

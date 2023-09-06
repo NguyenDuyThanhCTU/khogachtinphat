@@ -1,47 +1,14 @@
-const Connect = [
+export const imageItems = [
   {
-    icon: AiFillFacebook,
-    url: Facebook,
-    style: "hover:bg-white hover:text-blue-600",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/sanpham%2FNY8%20GM8802.jpg?alt=media&token=75f576a0-d795-4848-aeea-e4c2c05fbd47",
   },
   {
-    icon: BsPhone,
-    url: `tel:${Phone}`,
-    style: "",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/sanpham%2FNY8%20GM8802.jpg?alt=media&token=75f576a0-d795-4848-aeea-e4c2c05fbd47",
   },
   {
-    icon: SiZalo,
-    url: `http://zalo.me/${Phone}`,
-    style: "hover:text-blue-400 hover:bg-white w-10",
-  },
-  {
-    icon: HiUserGroup,
-    url: Fanpage,
-    style: "hover:bg-white hover:text-black p-1",
-  },
-  {
-    icon: BsMessenger,
-    url: Message,
-    style: "hover:bg-white hover:text-blue-600 p-1",
-  },
-  {
-    icon: AiOutlineInstagram,
-    url: Instagram,
-    style: "hover:bg-pink-500 hover:text-white",
-  },
-  {
-    icon: BsTiktok,
-    url: Tiktok,
-    style: "hover:bg-black hover:text-white p-1",
-  },
-  {
-    icon: BsTwitter,
-    url: Twitter,
-    style: "hover:bg-white hover:text-blue-600 p-1",
-  },
-  {
-    icon: AiFillYoutube,
-    url: Youtube,
-    style: "hover:bg-red-600 hover:text-white p-1",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/khogachtinp.appspot.com/o/sanpham%2FNY8%20GM8802.jpg?alt=media&token=75f576a0-d795-4848-aeea-e4c2c05fbd47",
   },
 ];

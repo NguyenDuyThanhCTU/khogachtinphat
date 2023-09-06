@@ -5,11 +5,13 @@ import { AuthProviders } from "./Context/AuthProviders";
 import { StateProvider } from "./Context/StateProvider";
 import { DataProviders } from "./Context/DataProviders";
 import DefaultLayout from "./Layout/DefaultLayout/DefaultLayout";
+import Fetch from "./Layout/DefaultLayout/Item/Fetch";
 const App = () => {
   return (
     <DataProviders>
       <StateProvider>
         <AuthProviders>
+          <Fetch />
           <Router>
             <Routes>
               {AllRoutes.map((route, index) => {

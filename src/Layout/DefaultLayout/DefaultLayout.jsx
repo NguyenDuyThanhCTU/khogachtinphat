@@ -10,7 +10,6 @@ import Footer from "./Footer/Footer";
 const DefaultLayout = ({ children }) => {
   return (
     <div className="bg-black">
-      <Fetch />
       {/* <div className="d:block p:hidden absolute z-10 h-[2500px]">
         <Sidebar />
       </div>

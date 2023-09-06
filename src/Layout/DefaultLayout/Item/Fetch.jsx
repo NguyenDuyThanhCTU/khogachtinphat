@@ -20,8 +20,8 @@ const Fetch = () => {
     setProducts,
     setGmail,
     setAddress,
+    setSocialMedia,
   } = useData();
-  const { setSocialMedia } = useData();
 
   const { isRefetch, setIsRefetch } = useStateProvider();
 
@@ -30,6 +30,10 @@ const Fetch = () => {
   }, []);
 
   useEffect(() => {
+    if (isRefetch != "") {
+      setIsRefetch("");
+    }
+
     getDocuments("website").then((data) => {
       setPhone(data[0].phone);
       setGmail(data[0].gmail);

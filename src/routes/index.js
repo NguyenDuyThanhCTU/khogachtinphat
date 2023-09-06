@@ -1,10 +1,12 @@
-import Home from "../components/Home/Home";
 import Login from "../components/Login/Login";
 import Admin from "../components/Admin/Admin";
 import EmptyLayout from "../Layout/EmptyLayout";
-import Introduction from "../components/FrontEnd/Introduction/Introduction";
-import Product from "../components/FrontEnd/Product/Product";
-import Contact from "../components/FrontEnd/Contact/Contact";
+
+import Home from "../components/Client/Home/Home";
+import Contact from "../components/Client/Contact/Contact";
+import Product from "../components/Client/Product/Product";
+import Introduction from "../components/Client/Introduction/Introduction";
+import ProductDetail from "../components/Client/Product/ProductDetail";
 
 export const AllRoutes = [
   {
@@ -32,5 +34,9 @@ export const AllRoutes = [
   {
     path: "/lien-he",
     component: Contact,
+  },
+  {
+    path: "/san-pham/:id",
+    component: ProductDetail,
   },
 ];
