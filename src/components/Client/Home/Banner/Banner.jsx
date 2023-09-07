@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { BiTrendingUp } from "react-icons/bi";
 import ProductAds from "../../../../Layout/DefaultLayout/Ads/ProductAds";
 import { useData } from "../../../../Context/DataProviders";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const { Banner, Products } = useData();
@@ -22,7 +23,7 @@ const Banner = () => {
       {/* <div className="h-[79px] mt-[21px] w-full  bg-[#a0d2ba] relative d:block p:hidden">
         <div className="h-[79px] bg-[#a0d2ba] w-10 absolute -right-2"></div>
       </div> */}
-      <div className="rounded-xl border border-yellow-400 shadow-xl p:w-[400px] h-auto d:mx-auto d:w-[1505px] bg-gray-500 text-yellow-400">
+      <div className="rounded-xl border border-yellow-400 shadow-xl p:w-auto h-auto d:mx-auto d:w-[1505px] bg-gray-500 text-yellow-400">
         <div className="p-5">
           <h3 className="font-semibold d:text-[24px] p:text-[18px] ">
             Sản phẩm mới
@@ -50,12 +51,14 @@ const Banner = () => {
               <div className="pb-5">
                 {latest.slice(0, 10).map((items) => (
                   <SwiperSlide>
-                    <ProductAds
-                      image={items.image}
-                      name={items.name}
-                      bricktype={items.brickType}
-                      bricksize={items.brickSize}
-                    />
+                    <Link to={`/san-pham/${items.id}`}>
+                      <ProductAds
+                        image={items.image}
+                        name={items.name}
+                        bricktype={items.brickType}
+                        bricksize={items.brickSize}
+                      />
+                    </Link>
                   </SwiperSlide>
                 ))}
               </div>

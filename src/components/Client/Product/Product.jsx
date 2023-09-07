@@ -7,12 +7,14 @@ import { useStateProvider } from "../../../Context/StateProvider";
 import { useData } from "../../../Context/DataProviders";
 import { getDocumentsByField } from "../../../Config/Services/Firebase/FireStoreDB";
 import ProductItem from "../Home/Product/ProductItem";
+import { Link } from "react-router-dom";
 
 const Product = () => {
   const [current, setCurrent] = useState(1);
   const [DataFetch, setDataFetch] = useState([]);
   const [SelectedIdx, setSelectedIdx] = useState(0);
-  const { SortByType, SortBySize, setSortByType } = useStateProvider();
+  const { SortByType, SortBySize, setSortByType, Search, setSearch } =
+    useStateProvider();
   const { BrickType } = useData();
 
   useEffect(() => {
@@ -29,9 +31,11 @@ const Product = () => {
     if (Idx === 0) {
       setSelectedIdx(Idx);
       setSortByType(" ");
+      setSearch("");
     } else {
       setSelectedIdx(Idx);
       setSortByType(Type);
+      setSearch("");
     }
   };
 
@@ -40,7 +44,9 @@ const Product = () => {
       <div className="d:m-auto d:w-[1505px] p:w-auto p:m-0 d:mt-10 p:my-5">
         <div className="p-5 p:rounded-none d:rounded-xl border shadow-xl w-auto">
           <h3 className="font-semibold d:text-[24px] p:text-[18px]">
-            Tất cả sản phẩm {SortByType} {SortBySize}
+            {Search !== ""
+              ? `Kết quả Tìm kiếm của từ khóa: ${Search}`
+              : `Tất cả sản phẩm ${SortByType} ${SortBySize}`}
           </h3>
           <div className="d:flex mt-7 gap-5 p:hidden ">
             <button
@@ -73,18 +79,25 @@ const Product = () => {
           {DataFetch.length > 0 ? (
             <>
               <div className="grid w-full  d:grid-cols-5 gap-5 grid-rows-5 p:grid-cols-2 ">
-                {DataFetch?.map((data) => (
-                  <ProductItem
-                    image={data.image}
-                    name={data.name}
-                    bricktype={data.brickType}
-                    bricksize={data.brickSize}
-                  />
+                {(Search !== ""
+                  ? DataFetch.filter((items) => items.brickType === Search)
+                  : DataFetch
+                )?.map((data) => (
+                  <>
+                    <Link to={`/san-pham/${data.id}`}>
+                      <ProductItem
+                        image={data.image}
+                        name={data.name}
+                        bricktype={data.brickType}
+                        bricksize={data.brickSize}
+                      />
+                    </Link>
+                  </>
                 ))}
               </div>
-              <div className="mt-5 d:flex justify-center p:hidden ">
+              {/* <div className="mt-5 d:flex justify-center p:hidden ">
                 <Pagination current={current} onChange={onChange} total={50} />
-              </div>
+              </div> */}
             </>
           ) : (
             <div>

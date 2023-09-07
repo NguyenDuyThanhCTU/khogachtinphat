@@ -12,6 +12,7 @@ import { useStateProvider } from "../../Context/StateProvider";
 import AddProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/AddProduct";
 import AddType from "./Content/Persona/ProductType/AddType/AddType";
 import EditProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/EditProduct";
+import UpdateProduct from "./Content/Persona/Products/LeftSide/AddProduct.jsx/UpdateProduct";
 
 const Admin = () => {
   const { verify } = useAuth();
@@ -37,6 +38,8 @@ const Admin = () => {
           <AddType />
         ) : isUploadProduct === 3 ? (
           <EditProduct />
+        ) : isUploadProduct === 4 ? (
+          <UpdateProduct />
         ) : null}
       </div>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
@@ -6,8 +6,16 @@ import Ads from "./Ads/Ads";
 import PopUp from "./PopUp/PopUp";
 import Fetch from "./Item/Fetch";
 import Footer from "./Footer/Footer";
+import { useLocation, useParams } from "react-router-dom";
 
 const DefaultLayout = ({ children }) => {
+  const location = useLocation();
+  const { id } = useParams();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname, id]);
+
   return (
     <div className="bg-black">
       {/* <div className="d:block p:hidden absolute z-10 h-[2500px]">

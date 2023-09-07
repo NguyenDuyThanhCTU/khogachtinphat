@@ -121,15 +121,12 @@ export const HeaderItems = [
 
 export const ProductDetailItems = [
   {
-    name: "Miễn phí vận chuyển khi đơn hàng trên 500.000đ",
-  },
-  {
     name: "Giao nhanh trong khu vực nội thành dưới 30km (4h - 24h)",
   },
   {
     name: "Đổi trả hàng toàn quốc (không hỗ trợ hàng khuyến mại)",
   },
   {
-    name: "Hotline : 0944747975 tư vấn online 24/7.",
+    name: "Hotline : 0932949933 tư vấn online 24/7.",
   },
 ];

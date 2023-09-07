@@ -29,9 +29,13 @@ const LeftSide = () => {
       setIsUploadProduct(2);
     });
   };
-  const HandleEdit = (id) => {
+  const HandleEdit = (id, type) => {
     setUpdateId(id);
-    setIsUploadProduct(3);
+    if (type === "edit") {
+      setIsUploadProduct(3);
+    } else {
+      setIsUploadProduct(4);
+    }
   };
 
   return (
@@ -51,10 +55,15 @@ const LeftSide = () => {
                       <FcViewDetails
                         className="hover:scale-125 duration-300"
                         onClick={() => {
-                          HandleEdit(data.id);
+                          HandleEdit(data.id, "edit");
                         }}
                       />
-                      <FiEdit className="text-green-600 hover:scale-125 duration-300" />
+                      <FiEdit
+                        className="text-green-600 hover:scale-125 duration-300"
+                        onClick={() => {
+                          HandleEdit(data.id, "update");
+                        }}
+                      />
                       <Popconfirm
                         title="Xóa sản phẩm"
                         description="Bạn muốn xóa sản phẩm này?"

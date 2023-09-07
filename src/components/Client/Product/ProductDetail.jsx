@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Pagination, Autoplay } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { BsStarFill, BsStarHalf } from "react-icons/bs";
-
-import { BiMinus, BiPlus } from "react-icons/bi";
 import { ProductDetailItems } from "../../../Utils/Item";
 import { useData } from "../../../Context/DataProviders";
 import { imageItems } from "../../../Utils/Temp";
 import { Image, Tabs } from "antd";
 import { Comments, FacebookProvider } from "react-facebook";
+import Display from "./Section/Display";
 
 const ProductDetail = () => {
   const [similarProduct, setSimilarProduct] = useState([]);
   const [Sort, setSort] = useState();
-  const [isCombo, setIsCombo] = useState(1);
-
-  const { ContactSort, Products } = useData();
+  const location = useLocation();
   const { id } = useParams();
+  const { Products } = useData();
 
-  const onMinus = () => {
-    if (isCombo > 0) {
-      setIsCombo(isCombo - 1);
-    }
-  };
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname, id]);
 
   useEffect(() => {
     const sort = Products.filter((item) => item.id === id);
@@ -35,16 +28,13 @@ const ProductDetail = () => {
     }
   }, [id, Products]);
 
-  // useEffect(() => {
-  //   const similarproduct = Products.filter(
-  //     (item) => item.parentParams === Sort?.parentParams
-  //   );
-  //   setSimilarProduct(similarproduct);
-  // }, [Products, Sort]);
+  useEffect(() => {
+    const similarproduct = Products.filter(
+      (item) => item.brickType === Sort?.brickType
+    );
+    setSimilarProduct(similarproduct);
+  }, [Products, Sort]);
 
-  const onChange = (key) => {
-    console.log(key);
-  };
   const items = [
     {
       key: "1",
@@ -76,13 +66,16 @@ const ProductDetail = () => {
         <div className="w-full">
           <FacebookProvider appId="781034490143336">
             {" "}
-            <Comments href="http://localhost:3000" width={1250} />{" "}
+            <Comments
+              href="https://khogachcaocaptinphat.com"
+              width={1250}
+            />{" "}
           </FacebookProvider>
         </div>
       ),
     },
   ];
-  console.log(Sort);
+
   return (
     <div className="flex flex-col gap-5 ">
       <div>
@@ -96,55 +89,62 @@ const ProductDetail = () => {
                 />
               </Image.PreviewGroup>
             </div>
-            <div className="w-full bg-white mt-3">
-              <div className="p-2 flex ">
-                <Image.PreviewGroup>
-                  {imageItems.map((item, idx) => (
-                    <div className="mx-4 w-[150px] ">
-                      <Image
-                        className="p-2 h-full w-full object-contain hover:scale-110 duration-500"
-                        src={item.image}
-                      />
-                    </div>
-                  ))}
-                </Image.PreviewGroup>
-              </div>
-            </div>
+            {Sort?.listimage?.length > 0 && (
+              <>
+                {" "}
+                <div className="w-full bg-white mt-3">
+                  <div className="p-2 flex ">
+                    <Image.PreviewGroup>
+                      {Sort?.listimage?.map((item, idx) => (
+                        <div className="mx-4 w-[150px] h-[150px] overflow-hidden flex items-center">
+                          <Image
+                            className="p-2 h-full w-full object-contain"
+                            src={item.image}
+                          />
+                        </div>
+                      ))}
+                    </Image.PreviewGroup>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
-          <div className="flex-1 flex flex-col gap-5">
-            <h3 className="text-[28px] uppercase">{Sort?.name}</h3>
-            <div className="flex gap-1 flex-col">
-              <div className="flex gap-5 items-center">
-                <span className="text-yellow-500 text-[24px]">Giá:</span>
-                <span className="bg-white text-red-500 py-2 px-4 rounded-2xl text-[24px] cursor-pointer">
-                  {" "}
-                  Liên Hệ
-                </span>
+          <div className="flex flex-col justify-between flex-1">
+            <div className=" flex flex-col gap-5">
+              <h3 className="text-[30px] uppercase">{Sort?.name}</h3>
+              <div className="flex gap-1 flex-col">
+                <div className="flex gap-5 items-center">
+                  <span className="text-yellow-500 text-[26px]">Giá:</span>
+                  <span className="text-red-500 text-[26px] font-bold">
+                    {" "}
+                    Liên Hệ
+                  </span>
+                </div>
+              </div>
+              <div className="w-[200px] ">
+                {!Sort?.state ? (
+                  <div className="p-3 text-green-500 border border-green-500 rounded-xl font-bold">
+                    Tình trạng: Còn hàng
+                  </div>
+                ) : (
+                  <div className="p-3 text-red-500 border border-red-500 rounded-xl font-bold">
+                    Tình trạng: Hết hàng
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col font-normal gap-3 text-[24px]">
+                <p>Loại gạch: {Sort?.brickType} </p>
+                <p>Kích thước: {Sort?.brickSize}</p>
               </div>
             </div>
-            <div className="w-[200px] ">
-              {!Sort?.state ? (
-                <div className="p-3 text-green-500 border border-green-500 rounded-xl font-bold">
-                  Tình trạng: Còn hàng
-                </div>
-              ) : (
-                <div className="p-3 text-red-500 border border-red-500 rounded-xl font-bold">
-                  Tình trạng: Hết hàng
-                </div>
-              )}
-            </div>
-            <div className="flex flex-col font-normal gap-3">
-              <p>Loại gạch: {Sort?.brickType} </p>
-              <p>Kích thước: {Sort?.brickSize}</p>
-            </div>
 
-            <div className="bg-gradient-to-t from-blue-400 to-blue-500 text-white">
+            <div className="bg-gradient-to-t from-yellow-400 to-yellow-500 text-black">
               <div className="p-3 flex flex-col gap-3">
                 {ProductDetailItems.map((items, idx) => (
                   <>
                     <div className="flex gap-5 items-center">
-                      <div className="rounded-full bg-orange-700 p-2 w-10 h-10 flex items-center justify-center">
+                      <div className="rounded-full bg-white p-2 w-10 h-10 flex items-center justify-center">
                         <span> {idx}</span>
                       </div>
                       <p>{items.name}</p>
@@ -160,10 +160,18 @@ const ProductDetail = () => {
             <Tabs
               defaultActiveKey="1"
               items={items}
-              onChange={onChange}
               className="bg-white px-10 rounded-md font-LexendDeca py-5"
             />
           </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <Display
+            Data={similarProduct}
+            title="Sản phẩm cùng loại"
+            background="bg-[url(https://firebasestorage.googleapis.com/v0/b/dora-a85b2.appspot.com/o/img%2Fvecteezy_background-gradient-blue-abstract-design-vector-illustration_16513887.jpg?alt=media&token=0e41ca8a-89cb-4099-913a-ce8e0168324b)]"
+          />
         </div>
       </div>
     </div>

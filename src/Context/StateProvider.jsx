@@ -10,10 +10,12 @@ export const StateProvider = ({ children }) => {
   const [SortByType, setSortByType] = useState(" ");
 
   const [isRefetch, setIsRefetch] = useState();
-
+  const [Search, setSearch] = useState("");
   return (
     <StateContext.Provider
       value={{
+        Search,
+        setSearch,
         isSelected,
         setSelected,
         isRefetch,

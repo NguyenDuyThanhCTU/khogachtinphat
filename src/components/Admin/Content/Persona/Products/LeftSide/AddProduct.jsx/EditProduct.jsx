@@ -31,7 +31,6 @@ const EditProduct = () => {
       setDataSort(sort[0]);
     }
   }, [Products]);
-  console.log(isRefetch);
 
   const HandleSubmit = () => {
     const data = {

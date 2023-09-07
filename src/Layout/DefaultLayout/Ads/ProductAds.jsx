@@ -6,10 +6,7 @@ const ProductAds = ({ image, name, bricktype, bricksize }) => {
   const { Phone } = useData();
   return (
     <div className="py-5 bg-gray-500">
-      <div
-        className="h-auto p:w-auto d:w-[190px] d:mx-0 p:mx-2  shadow-2xl    relative "
-        onClick={() => console.log("a")}
-      >
+      <div className="h-auto p:w-auto d:w-[190px] d:mx-0 p:mx-2  shadow-2xl    relative ">
         <div className="h-[200px] p:w-auto d:w-[188px] overflow-hidden">
           <img
             src={image}

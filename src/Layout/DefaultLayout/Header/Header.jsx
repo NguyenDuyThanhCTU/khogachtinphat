@@ -20,7 +20,8 @@ const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [elementTop, setElementTop] = useState(95);
   const [IsTranslate, setTranslate] = useState(false);
-  const [Search, setSearch] = useState("");
+  const { setSearch, Search } = useStateProvider();
+  const [keyword, setKeyword] = useState();
 
   const targetPosition = 1;
   const { Logo, Websitename, BrickType } = useData();
@@ -54,6 +55,9 @@ const Header = () => {
     setSortByType(type);
     navigate("/");
   };
+  const HandleSearch = () => {
+    setSearch(keyword);
+  };
 
   return (
     <div className="d:h-[126px] font-LexendDeca  p:h-auto">
@@ -81,14 +85,15 @@ const Header = () => {
                 <div className="relative text-black group  cursor-pointer">
                   <input
                     type="text"
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => setKeyword(e.target.value)}
                     className="p-2 px-4 outline-none rounded-full bg-white border-mainpink border w-[300px]"
                   />
-                  <Link to={`/cua-hang/tim-kiem/${Search}`}>
+                  <Link to={`/san-pham`}>
                     <FiSearch
+                      onClick={() => HandleSearch()}
                       className={`${
-                        Search && "-right-10 bg-[#F67D08] text-white"
-                      } group-hover:bg-[#F67D08] group-hover:text-white inline-block bg-white w-[36px] h-[36px] p-2 font-bold rounded-full text-[#F67D08] absolute right-[4px] bottom-[3px] group-hover:-right-10  duration-300 hover:scale-110`}
+                        Search ? "-right-10  " : "right-[4px] "
+                      } bg-[#F67D08] text-white group-hover:text-white inline-block w-[36px] h-[36px] p-2 font-bold rounded-full absolute  bottom-[3px] group-hover:-right-10  duration-300 hover:scale-110`}
                     />
                   </Link>
                   <div
