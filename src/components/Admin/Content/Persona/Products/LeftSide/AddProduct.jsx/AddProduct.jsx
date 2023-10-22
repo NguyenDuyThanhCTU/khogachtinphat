@@ -13,13 +13,15 @@ import { useData } from "../../../../../../../Context/DataProviders";
 import { addDocument } from "../../../../../../../Config/Services/Firebase/FireStoreDB";
 
 const AddProduct = () => {
-  const [imageUrl, setImageUrl] = useState();
+  const [imageUrl, setImageUrl] = useState("");
+
   const [name, setName] = useState("");
-  const [brickSize, setBrickSize] = useState("60x120");
-  const [brickType, setBrickType] = useState("GC");
+  const [brickSize, setBrickSize] = useState("");
+  const [brickType, setBrickType] = useState("");
   const [error, setError] = useState(false);
   const { setIsUploadProduct } = useStateProvider();
   const { BrickSize, BrickType } = useData();
+
   const handleDiscard = () => {
     setImageUrl();
     setName("");
@@ -27,26 +29,20 @@ const AddProduct = () => {
   };
 
   const HandleSubmit = () => {
-    if (!imageUrl || !name) {
-      notification["error"]({
-        message: "Tải lên không thành công!",
-        description: `Vui lòng bổ sung đầy đủ thông tin !`,
+    const data = {
+      image: imageUrl,
+      name: name,
+      brickSize: brickSize,
+      brickType: brickType,
+    };
+
+    addDocument("products", data).then(() => {
+      notification["success"]({
+        message: "Tải lên thành công!",
+        description: `Sản phẩm của bạn đã được tải lên !`,
       });
-    } else {
-      const data = {
-        image: imageUrl,
-        name: name,
-        brickSize: brickSize,
-        brickType: brickType,
-      };
-      addDocument("products", data).then(() => {
-        notification["success"]({
-          message: "Tải lên thành công!",
-          description: `Sản phẩm của bạn đã được tải lên !`,
-        });
-        setIsUploadProduct(0);
-      });
-    }
+      setIsUploadProduct(0);
+    });
   };
 
   const uploadImage = async (e) => {
@@ -157,6 +153,9 @@ const AddProduct = () => {
                     setBrickSize(e.target.value);
                   }}
                 >
+                  <option className=" outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300">
+                    -- chọn kích thước --
+                  </option>
                   {BrickSize?.map((item) => (
                     <option
                       key={item.id}
