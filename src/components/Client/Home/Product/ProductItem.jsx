@@ -7,7 +7,7 @@ const ProductItem = ({ image, bricktype, bricksize, name }) => {
   const { Phone } = useData();
   return (
     <div>
-      <div className="p:w-auto d:w-56 h-[330px] text-yellow-400 bg-black rounded-xl  hover:shadow-xl hover:scale-105 duration-300">
+      <div className="p:w-auto d:w-56 h-[380px] text-yellow-400 bg-black rounded-xl  hover:shadow-xl hover:scale-105 duration-300">
         <img
           src={image}
           alt="img"
@@ -20,14 +20,14 @@ const ProductItem = ({ image, bricktype, bricksize, name }) => {
 
           <div className="">
             <p>
-              <SiDatabricks className="inline-block mr-2" />
-              {bricktype}
+              <GiBrickPile className="   inline-block mr-2" />
+              {bricksize}
             </p>
           </div>
           <div className="flex w-full justify-between items-center">
             <p>
-              <GiBrickPile className="   inline-block mr-2" />
-              {bricksize}
+              <SiDatabricks className="inline-block mr-2" />
+              {bricktype}
             </p>
             <a
               target="_blank"

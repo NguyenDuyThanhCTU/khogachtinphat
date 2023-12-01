@@ -13,8 +13,10 @@ const Home = () => {
   const [current, setCurrent] = useState(1);
   const [DataFetch, setDataFetch] = useState([]);
   const [SelectedIdx, setSelectedIdx] = useState(0);
-  const { SortByType, SortBySize, setSortByType } = useStateProvider();
-  const { BrickType } = useData();
+  const { SortByType, SortBySize, setSortByType, Search, setSearch } =
+    useStateProvider();
+  const { BrickType, BrickSize } = useData();
+  const [sort, setSort] = useState("");
 
   useEffect(() => {
     getDocumentsByField("products", SortByType, SortBySize).then((data) => {
@@ -30,6 +32,7 @@ const Home = () => {
     if (Idx === 0) {
       setSelectedIdx(Idx);
       setSortByType(" ");
+      setSearch("");
     } else {
       setSelectedIdx(Idx);
       setSortByType(Type);
@@ -69,22 +72,48 @@ const Home = () => {
               </button>
             ))}
           </div>
+          <div className="d:flex mt-7 gap-5 p:hidden ">
+            <div className="flex flex-col gap-2">
+              <select
+                className="outline-none lg:w-650 border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded cursor-pointer"
+                onChange={(e) => setSort(e.target.value)}
+              >
+                <option>Tất cả sản phẩm</option>
+
+                {BrickSize.map((item, idx) => (
+                  <option
+                    key={idx}
+                    className=" outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
+                    value={item.typename}
+                  >
+                    {item.typename}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="mt-7 rounded-xl border-yellow-400 border shadow-xl p-5 p:w-auto d:w-full bg-gray-500 flex flex-col items-center">
           {DataFetch.length > 0 ? (
             <>
               <div className="grid w-full  d:grid-cols-5 gap-5 grid-rows-5 p:grid-cols-2 ">
-                {DataFetch?.map((data) => (
-                  <Link to={`/san-pham/${data.id}`}>
-                    {" "}
-                    <ProductItem
-                      image={data.image}
-                      name={data.name}
-                      bricktype={data.brickType}
-                      bricksize={data.brickSize}
-                    />
-                  </Link>
+                {(sort !== ""
+                  ? DataFetch.filter((item) => item.brickSize === sort)
+                  : Search !== ""
+                  ? DataFetch.filter((items) => items.brickType === Search)
+                  : DataFetch
+                )?.map((data) => (
+                  <>
+                    <Link to={`/san-pham/${data.id}`}>
+                      <ProductItem
+                        image={data.image}
+                        name={data.name}
+                        bricktype={data.brickType}
+                        bricksize={data.brickSize}
+                      />
+                    </Link>
+                  </>
                 ))}
               </div>
               <div className="mt-5 d:flex justify-center p:hidden ">
